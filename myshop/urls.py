@@ -24,7 +24,9 @@ from store.views import product_list
 urlpatterns = [
     path('admin/', admin.site.urls),
     # http://127.0.0.1:8000/ главная 
-    path('', product_list, name='product_list')
-]
+    path('', product_list, name='product_list'),
+    # http://127.0.0.1:8000/category/3 например электроника
+    path('category/<int:category_id>/', product_list, name='category_products')
+]   
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
