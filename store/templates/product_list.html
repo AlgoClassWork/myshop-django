@@ -92,7 +92,11 @@
 
     <h3>Категории:</h3>
     <ul>
-        <!-- Здесь будут категории -->
+        {% for category in categories %}
+            <li> 
+                <a href=""> {{ category.name }} </a>
+            </li>
+        {% endfor %}
     </ul>
 
     <h2 style="padding: 0 20px;">Товары:</h2>
