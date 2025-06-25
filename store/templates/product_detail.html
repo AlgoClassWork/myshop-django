@@ -20,6 +20,9 @@
         <h2>{{ product.title }}</h2>
         <p>{{ product.description }}</p>
         <p class="price">Цена: {{ product.price }} сом</p>
+        <form action="" method="post">
+          <button> Добавить в корзину </button>
+        </form>
         <a href="{% url 'product_list' %}" class="back-link">← Назад в магазин</a>
       </div>
     </div>
