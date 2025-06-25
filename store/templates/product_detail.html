@@ -1,16 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ product.title }}</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ product.title }}</title>
+  <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
 </head>
 <body>
 
-    <h2> {{product.title}} </h2>
-    <img src="{{ product.image.url }}" >
-    <p> {{product.description}} </p>
-    <p> Цена {{product.price}} сом </p>
-    
+  <header>
+    <h1>{{ product.title }}</h1>
+  </header>
+
+  <div class="container">
+    <div class="product-detail">
+      <img src="{{ product.image.url }}" alt="{{ product.title }}">
+      <div class="product-info">
+        <h2>{{ product.title }}</h2>
+        <p>{{ product.description }}</p>
+        <p class="price">Цена: {{ product.price }} сом</p>
+        <a href="{% url 'product_list' %}" class="back-link">← Назад в магазин</a>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
