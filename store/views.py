@@ -39,5 +39,9 @@ def add_to_cart(request, product_id):
     return redirect('cart')
 
 # http://127.0.0.1:8000/cart/remove/3 Удалить Бетмена
-def remove_from_cart():
-    pass
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', [])
+    if product_id in cart:
+        cart.remove(product_id)
+        request.session['cart'] = cart
+    return redirect('cart')
