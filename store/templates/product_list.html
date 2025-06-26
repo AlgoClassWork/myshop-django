@@ -9,31 +9,45 @@
 </head>
 <body>
 
+  <!-- Header Section -->
   <header>
-    <h1>Добро пожаловать в магазин</h1>
-    <a href="{% url 'cart' %}"> Корзина </a>
+    <div class="container">
+      <h1>Добро пожаловать в магазин</h1>
+      <a href="{% url 'cart' %}" class="cart-link">Корзина</a>
+    </div>
   </header>
 
-  <h3>Категории:</h3>
-  <ul>
-    {% for category in categories %}
-      <li>
-        <a href="{% url 'category_products' category.id %}">🛍 {{ category.name }}</a>
-      </li>
-    {% endfor %}
-  </ul>
+  <!-- Categories Section -->
+  <section class="categories">
+    <h3>Категории:</h3>
+    <ul>
+      {% for category in categories %}
+        <li><a href="{% url 'category_products' category.id %}">🛍 {{ category.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
 
-  <h2>Товары:</h2>
-  <div class="product-container">
-    {% for product in products %}
-      <div class="product-card">
-        <img src="{{ product.image.url }}" alt="{{ product.title }}">
-        <h4>{{ product.title }}</h4>
-        <p>{{ product.price }} руб.</p>
-        <a href="{% url 'product_detail' product.id %}">Подробнее</a>
-      </div>
-    {% endfor %}
-  </div>
+  <!-- Products Section -->
+  <section class="products">
+    <h2>Товары:</h2>
+    <div class="product-container">
+      {% for product in products %}
+        <div class="product-card">
+          <img src="{{ product.image.url }}" alt="{{ product.title }}">
+          <h4>{{ product.title }}</h4>
+          <p>{{ product.price }} руб.</p>
+          <a href="{% url 'product_detail' product.id %}" class="btn-detail">Подробнее</a>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Магазин. Все права защищены.</p>
+    </div>
+  </footer>
 
 </body>
 </html>
