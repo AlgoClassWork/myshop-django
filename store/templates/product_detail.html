@@ -9,25 +9,31 @@
 </head>
 <body>
 
+  <!-- Header Section -->
   <header>
-    <h1>{{ product.title }}</h1>
+    <div class="container">
+      <h1>{{ product.title }}</h1>
+    </div>
   </header>
 
-  <div class="container">
-    <div class="product-detail">
-      <img src="{{ product.image.url }}" alt="{{ product.title }}">
-      <div class="product-info">
-        <h2>{{ product.title }}</h2>
-        <p>{{ product.description }}</p>
-        <p class="price">Цена: {{ product.price }} сом</p>
-        <form action="{% url 'add_to_cart' product.id %}" method="post">
-          {% csrf_token %}
-          <button> Добавить в корзину </button>
-        </form>
-        <a href="{% url 'product_list' %}" class="back-link">← Назад в магазин</a>
+  <!-- Product Detail Section -->
+  <section class="product-detail-section">
+    <div class="container">
+      <div class="product-detail">
+        <img src="{{ product.image.url }}" alt="{{ product.title }}">
+        <div class="product-info">
+          <h2>{{ product.title }}</h2>
+          <p>{{ product.description }}</p>
+          <p class="price">Цена: {{ product.price }} сом</p>
+          <form action="{% url 'add_to_cart' product.id %}" method="post">
+            {% csrf_token %}
+            <button class="add-to-cart-btn">Добавить в корзину</button>
+          </form>
+          <a href="{% url 'product_list' %}" class="back-link">← Назад в магазин</a>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
 </body>
 </html>
