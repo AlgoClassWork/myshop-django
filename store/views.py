@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
+from store.forms import OrderForm
 from store.models import Product, Category
 
 # Create your views here.
@@ -45,3 +46,25 @@ def remove_from_cart(request, product_id):
         cart.remove(product_id)
         request.session['cart'] = cart
     return redirect('cart')
+
+# http://127.0.0.1:8000/order/ Оформить заказ
+def order(request):
+    cart = request.session.get('cart', [])
+    products = Product.objects.filter(id__in=cart)
+
+    if not products:
+        return redirect('product_list')
+    
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save()
+            order.products.set(products)
+            order.save()
+            request.session['cart'] = []
+            return render(request,'order_success.html', 
+            {'order': order})
+
+    form = OrderForm()
+    return render(request, 'order.html',
+    {'products': products, 'form': form})

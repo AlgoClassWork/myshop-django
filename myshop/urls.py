@@ -38,6 +38,9 @@ urlpatterns = [
     # http://127.0.0.1:8000/cart/remove/3 Удалить Бетмена
     path('cart/remove/<int:product_id>/', remove_from_cart, name='remove_from_cart'),
 
+    # http://127.0.0.1:8000/order/ Оформление заказа
+    path('order/', order, name='order'),
+
 ]   
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

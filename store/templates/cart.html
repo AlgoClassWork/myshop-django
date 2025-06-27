@@ -41,6 +41,7 @@
         <div class="cart-total">
           <p>Итого: {{ products|length }} товар(ов)</p>
           <p class="total-price">Общая сумма: {{ total_price }} сом</p>
+          <a href="{% url 'order' %}"> Оформить заказ </a>
         </div>
 
       {% else %}

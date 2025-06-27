@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа</title>
+</head>
+<body>
+
+    <h2> Оформление заказа </h2>
+    <a href="{% url 'cart' %}"> В корзину </a>
+
+    <ul>
+        {% for product in products %}
+            <li>
+                {{ product.title }} - {{ product.price }} сом
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button> Оформить заказ </button>
+    </form>
+    
+</body>
+</html>
