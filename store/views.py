@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import login
 
-from store.forms import OrderForm
+from store.forms import OrderForm, RegisterForm
 from store.models import Product, Category
 
 # Create your views here.
@@ -68,3 +69,17 @@ def order(request):
     form = OrderForm()
     return render(request, 'order.html',
     {'products': products, 'form': form})
+
+
+# http://127.0.0.1:8000/register Регистрация
+def register(request):
+    form = RegisterForm()
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('product_list')
+
+    return render(request, 'register.html',
+    {"form": form})

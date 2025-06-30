@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -40,6 +40,12 @@ urlpatterns = [
 
     # http://127.0.0.1:8000/order/ Оформление заказа
     path('order/', order, name='order'),
+
+    # Пользовательские пути
+    # http://127.0.0.1:8000/login/logout/password
+    path('accounts/', include('django.contrib.auth.urls')),
+    # http://127.0.0.1:8000/register Регистрация 
+    path('register/', register, name='register')
 
 ]   
 
