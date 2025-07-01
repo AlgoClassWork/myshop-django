@@ -45,7 +45,11 @@ urlpatterns = [
     # http://127.0.0.1:8000/login/logout/password
     path('accounts/', include('django.contrib.auth.urls')),
     # http://127.0.0.1:8000/register Регистрация 
-    path('register/', register, name='register')
+    path('register/', register, name='register'),
+
+    # Рейтниг
+    # http://127.0.0.1:8000/rate/4
+     path('rate/<int:product_id>/', product_rate, name='product_rate'),
 
 ]   
 
