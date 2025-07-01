@@ -24,6 +24,23 @@
         <div class="product-info">
           <h2>{{ product.title }}</h2>
           <p>{{ product.description }}</p>
+          <p> Средняя оценка: {{avg_rating}} </p>
+          
+          {% if user.is_authenticated %}
+            <form action="{% url 'product_rate' product.id %}" method="post">
+              {% csrf_token %}
+              <label> Ваша оценка: </label>
+              <select name="score">
+                {% for i in "12345" %}
+                  <option value="{{i}}" {% if user_rating and user_rating.score == i %} selected {% endif %}> 
+                    {{i}} 
+                  </option>
+                {% endfor %}
+              </select>
+              <button> Оценить </button>
+            </form>
+          {% endif %}
+
           <p class="price">Цена: {{ product.price }} сом</p>
           <form action="{% url 'add_to_cart' product.id %}" method="post">
             {% csrf_token %}
