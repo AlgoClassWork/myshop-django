@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login
+from django.db import models
 
 from store.forms import OrderForm, RegisterForm
-from store.models import Product, Category
+from store.models import Product, Category, Rating
 
 # Create your views here.
 # http://127.0.0.1:8000/ главная
@@ -22,8 +24,15 @@ def product_list(request, category_id=None):
 # http://127.0.0.1:8000/product/1 например Iphone 15
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    ratings = Rating.objects.filter(product=product) 
+    avg_rating = round(ratings.aggregate(models.Avg('score'))['score__avg'] or 0, 1)
+
+    user_rating = None
+    if request.user.is_authenticated:
+        user_rating = Rating.objects.filter(product=product, user=request.user).first()
+
     return render(request, 'product_detail.html',
-    {'product': product})
+    {'product': product, 'avg_rating': avg_rating, 'user_rating': user_rating})
 
 # http://127.0.0.1:8000/cart Просмотр корзины
 def cart(request):
@@ -83,3 +92,17 @@ def register(request):
 
     return render(request, 'register.html',
     {"form": form})
+
+#http://127.0.0.1:8000/rate/4
+@login_required
+def product_rate(request, product_id):
+    if request.method == 'POST':
+        score = int(request.POST.get('score'))
+        product = get_object_or_404(Product, id=product_id)
+
+        rating, created = Rating.objects.update_or_create(
+            user=request.user,
+            product=product,
+            defaults={'score': score}
+        )
+    return redirect('product_detail', product_id=product_id)
