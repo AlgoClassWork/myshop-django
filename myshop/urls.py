@@ -49,7 +49,7 @@ urlpatterns = [
 
     # Рейтниг
     # http://127.0.0.1:8000/rate/4
-     path('rate/<int:product_id>/', product_rate, name='product_rate'),
+    path('rate/<int:product_id>/', product_rate, name='product_rate'),
 
 ]   
 
