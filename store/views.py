@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login
 from django.db import models
+from django.db.models import Avg
 
 from store.forms import OrderForm, RegisterForm
 from store.models import Product, Category, Rating
@@ -10,13 +11,20 @@ from store.models import Product, Category, Rating
 # http://127.0.0.1:8000/ главная
 # http://127.0.0.1:8000/category/3 например электроника
 def product_list(request, category_id=None):
-    products = Product.objects.all()
+    products = Product.objects.all().annotate(avg_rating=Avg('rating__score'))
     categories = Category.objects.all()
 
     selected_category = None
     if category_id:
         selected_category = get_object_or_404(Category, id=category_id)
         products = products.filter(category=selected_category)
+
+    #http://127.0.0.1:8000/?sort=rating
+    sort = request.GET.get('sort')
+    if sort == 'rating':
+        products = products.order_by('-avg_rating')
+    elif sort == 'price':
+        products = products.order_by('price')
 
     return render(request, 'product_list.html', 
     {'products' : products, 'categories' : categories})
