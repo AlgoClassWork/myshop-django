@@ -35,6 +35,16 @@
         <li><a href="{% url 'category_products' category.id %}">🛍 {{ category.name }}</a></li>
       {% endfor %}
     </ul>
+
+    <form method="get">
+      <label> Сортировка: </label>
+      <select name="sort" onchange="this.form.submit()">
+        <option value=""> По умолчанию </option>
+        <option value="rating" {% if sort == 'rating' %} selected {% endif %} > По рейтингу </option>
+        <option value="price" {% if sort == 'price' %} selected {% endif %} > По цене </option>
+      </select>
+    </form>
+    
   </section>
 
   <!-- Products Section -->
