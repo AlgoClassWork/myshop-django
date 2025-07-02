@@ -4,8 +4,8 @@ from django.contrib.auth import login
 from django.db import models
 from django.db.models import Avg
 
-from store.forms import OrderForm, RegisterForm
-from store.models import Product, Category, Rating
+from store.forms import *
+from store.models import *
 
 # Create your views here.
 # http://127.0.0.1:8000/ главная
@@ -40,10 +40,19 @@ def product_detail(request, product_id):
         user_rating = Rating.objects.filter(product=product, user=request.user).first()
 
     comments = product.comments.order_by('-created_at')
+    comment_form = CommentForm()
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.product = product
+            comment.save()
+            return redirect('product_detail', product_id = product.id)
 
     return render(request, 'product_detail.html',
     {'product': product, 'avg_rating': avg_rating, 'user_rating': user_rating,
-     'comments': comments})
+     'comments': comments, 'comment_form': comment_form })
 
 # http://127.0.0.1:8000/cart Просмотр корзины
 def cart(request):
