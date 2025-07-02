@@ -52,5 +52,19 @@
     </div>
   </section>
 
+  <h3> Комментарии: </h3>
+  {% for comment in comments %}
+    <p> {{ comment.user.username }} : {{ comment.created_at }} </p>
+    <p> {{ comment.text }} </p>
+  {% endfor %}
+
+  {% if user.is_authenticated %}
+    <form method="post">
+      {% csrf_token %}
+      {{ comment_form.as_p }}
+      <button name="comment"> Добавить комментарий </button>
+    </form>
+  {% endif %}
+
 </body>
 </html>
