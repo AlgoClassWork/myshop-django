@@ -39,8 +39,11 @@ def product_detail(request, product_id):
     if request.user.is_authenticated:
         user_rating = Rating.objects.filter(product=product, user=request.user).first()
 
+    comments = product.comments.order_by('-created_at')
+
     return render(request, 'product_detail.html',
-    {'product': product, 'avg_rating': avg_rating, 'user_rating': user_rating})
+    {'product': product, 'avg_rating': avg_rating, 'user_rating': user_rating,
+     'comments': comments})
 
 # http://127.0.0.1:8000/cart Просмотр корзины
 def cart(request):
